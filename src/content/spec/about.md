@@ -1,2 +1,2 @@
 # About
-*This page is under construction.*
+你好！Hello! 　初めまして！
