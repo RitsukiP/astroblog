@@ -1,7 +1,8 @@
 ---
 title: reMarkable 2 随想评测
 published: 2023-01-06
-tags: [评测, 科技数码, reMarkable]
+category: 科技
+tags: [评测, reMarkable]
 image: https://raw.githubusercontent.com/ObservatoryX/HexoResource/main/Head_pic/rmunsp.jpg
 description: 一个大学生的 reMarkable 2 电子纸一周年使用报告
 permalink: /reMarkable2-random_review/

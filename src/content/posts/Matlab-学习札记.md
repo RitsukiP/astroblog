@@ -2,9 +2,8 @@
 title: Matlab 学习札记
 published: 2022-01-20
 description: 本博文主要记录一些在学习 Matlab 时的一些指令和公式，方便自己回看和复习各种指令以及相关知识。
-plugins:
-- mathjax
-tags: [笔记, MATLAB]
+category: 笔记
+tags: [MATLAB]
 ---
 
 # 使用指南

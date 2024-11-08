@@ -1,7 +1,8 @@
 ---
 title: 浅谈英文原著入门
 published: 2023-06-19
-tags: [杂谈]
+category: 杂谈
+tags: [英文]
 description: 随便写写
 ---
 

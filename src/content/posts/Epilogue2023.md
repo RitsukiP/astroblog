@@ -1,6 +1,7 @@
 ---
 title: I wrote the \0 of 2023
-tags: [杂谈, 年终总结]
+category: 杂谈
+tags: [年终总结]
 description: 为 2023 年划上终止字符
 published: 2023-12-31
 ---

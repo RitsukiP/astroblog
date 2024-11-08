@@ -1,7 +1,7 @@
 ---
 title: So you don't want to pay for just one article
 published: 2020-04-25
-tags: [科技]
+category: 科技
 description: 本篇博客讨论如何通过一些简便的手段绕过部分新闻传媒网站/文章创作网站的付费墙（Paywall）。
 ---
 
