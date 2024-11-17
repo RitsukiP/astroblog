@@ -15,7 +15,9 @@
 
 ## 与我联络
 
-除链接中的 SNS 平台和 IM 工具外，阁下还可通过[电子邮件](mailto: me.simon_R@outlook.com)与我赛博闲庭信步，盼君来信。
+除链接中的 SNS 平台和 IM 工具外，还可通过电子邮件（见下方）与我赛博闲庭信步，盼君来信。
+
+with_obx@outlook.com
 
 ## 更新说明
 
