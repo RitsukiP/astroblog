@@ -65,7 +65,7 @@ export const profileConfig: ProfileConfig = {
     {
       name: 'Telegram',
       icon: 'fa6-brands:telegram',
-      url: 'https://t.me/Leviticus-aru',
+      url: 'https://t.me/Leviticus_Aru',
     },
     {
       name: 'GitHub',
