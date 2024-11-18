@@ -1,3 +1,4 @@
+import { LinkPresets } from '@constants/link-presets'
 import type {
   LicenseConfig,
   NavBarConfig,
@@ -41,6 +42,7 @@ export const navBarConfig: NavBarConfig = {
   links: [
     LinkPreset.Home,
     LinkPreset.Archive,
+    LinkPreset.Friends,
     LinkPreset.About,
     {
       name: '链接',
