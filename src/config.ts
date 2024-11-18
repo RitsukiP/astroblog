@@ -1,4 +1,3 @@
-import { LinkPresets } from '@constants/link-presets'
 import type {
   LicenseConfig,
   NavBarConfig,
