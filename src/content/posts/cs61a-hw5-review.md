@@ -1,13 +1,12 @@
 ---
 title: CS61A Homework 5 Review
-published: 2024-11-13
-description: ''
-image: ''
+published: 2024-11-20
+description: CS61A Homework 5 答案以及自我解析
 tags: [CS61A]
 category: 笔记
-draft: true
-lang: ''
 ---
+
+本文基于 [CS61A](https://cs61a.org) 2024 Fall 的 [Homework 5](https://cs61a.org/hw/hw05/) 而记。
 
 ## Q1 Infinite Hailstone
 
@@ -61,7 +60,7 @@ for <name> in <expression>:
     <suite>
 ```
 
-> To execute a `for` statement, Python evaluates the header `<expression>`, which must yield an iterable value. Then, the `__iter__` method is invoked on that value. Until a `StopIteration` exception is raised, Python repeatedly invokes the `__next__` method on that iterator and binds the result to the `<name>` in the `for` statement. Then, it executes the `<suite>`.
+> To execute a `for` statement, Python evaluates the header `<expression>`, which must yield an iterrable value. Then, the `__iter__` method is invoked on that value. Until a `StopIteration` exception is raised, Python repeatedly invokes the `__next__` method on that iterator and binds the result to the `<name>` in the `for` statement. Then, it executes the `<suite>`.
 
 首先 Python 检查 `<expression>` 是否为可迭代的东西，显然 `hailstone(1)` 作为 Generator 是可迭代的，但由于 Iterator / Generator 的 Lazy Computation 属性，我们还不知道 `hailstone(1)` 是什么，Python 就会先评估（执行）生成器控制程序。分析得到 `yield 1` ，即输出 1 ，所以每次评估 `hailstone(1)` 都会 `yield 1` 。以上部分又可以简化为 `yield from hailstone(1)` 。
 
@@ -169,7 +168,7 @@ For `stair_ways(3)`:
 
 然后我们来讨论 `stair_ways(2).__next()`。第一步，它 `yield [1] + way`，其中这里的 `way` 是 `stair_ways(1)` 即输出 `[1]`，第一步先输出 `[1] + [1]` 即 `[1, 1]`；第二步，它 `yield [2] + way`，这里的 `way` 为 `stair_ways(0).__next__()` 即为 `[]`。加起来就是输出 `[2]`。
 
-再往上代入后就知道程序将输出 `[1, 1, 1], [1, 2]` 
+再往上代入，即在 `[1]` 后连接列表，就知道程序将输出 `[1, 1, 1], [1, 2]` 。
 
 
 
@@ -179,16 +178,68 @@ Write a generator function `yield_paths` that takes a tree `t` and a target `val
 
 Each path should be returned as a list of labels from the root to the matching node. The paths can be yielded in any order.
 
+程序结果示例：
+
+```python
+>>> t1 = tree(1, [tree(2, [tree(3), tree(4, [tree(6)]), tree(5)]), tree(5)])
+>>> print_tree(t1)
+1
+  2
+    3
+    4
+      6
+    5
+  5
+>>> next(yield_paths(t1, 6))
+[1, 2, 4, 6]
+>>> path_to_5 = yield_paths(t1, 5)
+>>> sorted(list(path_to_5))
+[[1, 2, 5], [1, 5]]
+
+>>> t2 = tree(0, [tree(2, [t1])])
+>>> print_tree(t2)
+0
+  2
+    1
+      2
+        3
+        4
+          6
+        5
+      5
+>>> path_to_2 = yield_paths(t2, 2)
+>>> sorted(list(path_to_2))
+[[0, 2], [0, 2, 1, 2]]
+```
+
+以上我们可以分析得出，`yield_path` 返回的是一系列 lists，其中每一个 list 是从顶部节点到 `value` 的路径。
+
 Solution:
 
 ```python
 def yield_paths(t, value):
     if label(t) == value:
+        "*** YOUR CODE HERE ***"
         yield [value]
 	for b in branches(t):
+        "*** YOUR CODE HERE ***"
         for path in yield_paths(b, value):
             yield [label(t)] + path
 ```
+
+官方答案解释：
+
+> If our current label is equal to `value`, we've found a path from the root to a node containing `value` containing only our current label, so we should yield that. From there, we'll see if there are any paths starting from one of our branches that ends at a node containing `value`. If we find these "partial paths" we can simply add our current label to the beginning of a path to obtain a path starting from the root.
+>
+> In order to do this, we'll create a generator for each of the branches which yields these "partial paths". By calling `yield_paths` on each of the branches, we'll create exactly this generator! Then, since a generator is also an iterator, we can iterate over the paths in this generator and yield the result of concatenating it with our current label.
+
+题目中有一个预判定条件 `if label(t) == value:`，整个函数体本身是一个 recursive case。
+
+先讨论预判定条件我们很容易得出此时应当 `yield [value(t)]` 或者 `yield [label(t)]`，这种情况出现在在某一个分叉中找到目标节点。
+
+
+
+再来看 recursive case（即主函数体），所有代码都是工作于在每个传入树的分支中，本题的目的是要在每个分支中寻找目标节点并记录路径（path），于是我们应该在每个分支中调用 `yield_paths` 来执行这一任务，所以得出 `for path in yield_paths(b, value)`，因为 `yield_paths` 是个可迭代的 generator，所以调用后所 yield 出来的内容会成为 `path` 的值，在查找的过程中就需要记录所经过的节点之 label ，所以应当 `yield [label(t)] + path`。
 
 
 
