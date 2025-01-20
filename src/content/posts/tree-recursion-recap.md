@@ -3,10 +3,9 @@ title: 树递归复习
 published: 2024-11-10
 description: ''
 image: ''
-tags: [CS61A]
+tags: [CS61A, Python]
 category: 笔记
 draft: true
-lang: ''
 ---
 
 ## 基础递归
