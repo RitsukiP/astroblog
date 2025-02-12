@@ -124,3 +124,5 @@ An operator can be a call expression too  / 一个运算符也可以成为一个
 ((lambda (x y z) (+ x y (square z))) 1 2 3)
 ```
 
+## Scheme Lists
+
