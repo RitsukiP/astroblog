@@ -41,7 +41,7 @@ conda create -n yolov8 python=3.8
 
 创建一个名为 `yolov8` 的虚拟环境并指定 Python 版本为 3.8，这将是 YOLO 训练所用的虚拟环境；**一定要指定版本**以防依赖出错。
 
-```shell
+```
 conda activate yolov8
 ```
 
@@ -58,7 +58,7 @@ pip config set global.index-url https://mirrors.tuna.tsinghua.edu.cn/pypi/web/si
 
 ### 2. PyTorch 安装
 
-**检查运行环境：**在安装 PyTorch 之前需要确认平台的硬件环境，如果使用 Nvidia GPU 进行训练就需要确认 CUDA 版本；
+**检查运行环境**：在安装 PyTorch 之前需要确认平台的硬件环境，如果使用 Nvidia GPU 进行训练就需要确认 CUDA 版本；
 
 ```
 nvidia-smi
@@ -97,7 +97,7 @@ pip install -e .
 
 此时已经完成了 Ultralytics 本体的安装，但仍缺少一些依赖。YOLO v8 的需求文件被放置在第一个版本中，打开初代版本即 v8.0.4 的[页面](https://github.com/ultralytics/ultralytics/tree/v8.0.4)并下载 `requirements.txt` 至 `ultralytics-main` 中；
 
-```\
+```
 pip install -r requirements.txt
 ```
 
@@ -113,7 +113,7 @@ mkdir datasets
 
 使用 YOLO v8 模型需要在 Ultralytics 的文档中找到 [YOLO v8](https://docs.ultralytics.com/zh/models/yolov8/) 并下载所需要的 .pt 预训练模型文件；
 
-**（Optional）**为方便管理模型文件，可在 `ultralytics` 下创建 `pt` 文件夹用于存放与训练模型文件。
+**（Optional）** 为方便管理模型文件，可在 `ultralytics` 下创建 `pt` 文件夹用于存放与训练模型文件。
 
 此时你的项目架构应当类似于：
 
@@ -181,7 +181,7 @@ YOLO 的训练可以通过指令或者 Python 脚本开始执行。执行命令�
 
 参数设置可以参考[官方文档](https://docs.ultralytics.com/zh/models/yolov8/#yolov8-usage-examples)，示例指令：
 
-```shell
+```
 yolo task=segment mode=train model=./ultralytics/pt/yolov8n-seg.pt data=./datasets/data1/config.yaml workers=1 epochs=50 batch=16
 ```
 
