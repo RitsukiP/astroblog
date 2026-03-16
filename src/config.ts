@@ -53,7 +53,7 @@ export const navBarConfig: NavBarConfig = {
 
 export const profileConfig: ProfileConfig = {
   avatar: 'assets/images/IMG_7218.JPG',  // Relative to the /src directory. Relative to the /public directory if it starts with '/'
-  name: 'Simon Chen',
+  name: 'Ethan Chen',
   bio: 'El pueblo unido jamás será vencido.',
   links: [
     {
