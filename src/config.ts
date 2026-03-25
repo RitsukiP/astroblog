@@ -44,8 +44,8 @@ export const navBarConfig: NavBarConfig = {
     LinkPreset.Friends,
     LinkPreset.About,
     {
-      name: '链接',
-      url: 'https://bento.me/kirakira',     // Internal links should not include the base path, as it is automatically added
+      name: '旧站（已弃用）',
+      url: 'https://ObservatoryX.github.io',     // Internal links should not include the base path, as it is automatically added
       external: true,                               // Show an external link icon and will open in a new tab
     },
   ],
