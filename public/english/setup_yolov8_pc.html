@@ -4,12 +4,13 @@
     <meta charset="UTF-8" />
     <title>Deploy YOLO v8 and train datasets on Windows PC</title>
   </head>
+
   <body>
-    <a href="en_index.html">Back to Index</a>
+    <a href="index.html">Back to Index</a>
     <h1>Deploy YOLO v8 and train datasets on Windows PC</h1>
     <p>
-      This document records how to set up a YOLO v8 inference system and train
-      the datasets on a Windows PC
+      This document records every step of locally deploying a YOLO v8 system on a Windows PC,
+      building a dataset, and training it.
     </p>
 
     <h2>Part A. Environment set up and architecture design</h2>
@@ -18,14 +19,15 @@
       to follow a sequence to conduct installation.
     </p>
 
-    <h3>1. Conda environment config</h3>
+    <h3>1. Configuring the Conda Environment</h3>
     <p>
-      There are <a href="">Miniconda</a> and <a href="">Anaconda</a> two types
-      of software. The difference between them is that the former one will only
-      install the basic Python packages after initialisation, but the latter one
-      will give you all handy packages and GUI called <b>Navigator</b> after
-      initialisation. I'll use Miniconda for demonstration.
+      Conda comes in two flavors: <a href="https://www.anaconda.com/docs/getting-started/miniconda/main">Miniconda</a>
+      and <a href="https://www.anaconda.com/docs/getting-started/anaconda/main">Anaconda</a> .
+      The difference is that Miniconda ships only the bare-minimum Python packages on first install, whereas Anaconda
+      is ready to go out of the box for basic data-processing work and comes with the visual Navigator tool for managing environments.
+      This guide will use Miniconda for the installation walkthrough.
     </p>
+    
 
     <h4>1.1 Installation</h4>
     <p>
@@ -37,19 +39,220 @@
 
     <h4>1.2 Create virtual environment and start using</h4>
     <p>
-      After installation, you can find Anaconda Prompt and Anaconda Powershell Prompt,
-      it indicates that conda environment is successfully installed.
-      <br />Start one of them, it indicates that you are running conda if the `(base)` is shown.
+      Once installation succeeds, you'll find Anaconda Prompt and Anaconda Powershell
+      Prompt in your search bar, which means conda has been installed.
+      Launch either one, and if you see <code>(base)</code> appear before the working directory
+      in the terminal, conda is running correctly.
 
       <pre><code>
-        conda create -n yolov8 python=3.8
+conda create -n yolov8 python=3.8
       </code></pre>
 
+      This creates a virtual environment named <code>yolov8</code> and pins the Python version to 3.8.
+      This will be the virtual environment used for YOLO training;
+      <b>always pin the version</b> to avoid dependency conflicts.
 
+      <pre><code>
+conda activate yolov8
+      </code></pre>
+
+      Run this command to activate the virtual environment. When the prompt prefix changes from
+      <code>(base)</code> to <code>(yolov8)</code> , the environment is active.
+      <b>Make sure every operation from here on is performed with this environment activated!</b>
     </p>
 
+    <h3>2. Installing PyTorch</h3>
+    <p>
+      <b>Check your runtime environment</b>: before installing PyTorch, confirm your platform's hardware setup.
+      If you're training on an Nvidia GPU, you need to check the CUDA version:
 
+      <pre><code>
+nvidia-smi
+      </code></pre>
 
+      Run this command in the terminal to view your Nvidia GPU info.
+      The CUDA version shown in the first row of the table is your CUDA version.
+
+      You usually shouldn't install the very latest version of PyTorch.
+      Open the <a href="https://pytorch.org/get-started/previous-versions/">previous versions page</a> on the
+      official site and pick a PyTorch version that's at or below your current CUDA version.
+      If you don't have a GPU, choose the CPU-only version instead.
+    </p>
+    <p>
+      The install command should look something like:
+      <pre><code>
+pip install torch==2.4.1 torchvision==0.19.1 torchaudio==2.4.1 --index-url https://download.pytorch.org/whl/cu124
+      </code></pre>
+    </p>
+
+    <p>
+      <b>Note: This case usually applies if you live in a country that conducting state-wide connection blocking, such as the People's Republic of China:</b>
+    </p>
+    <p>
+      Sometimes you are not able to connect to the server of PyTorch, you can use network proxy to access.
+      If you use Clash as a system proxy, configure it properly so international connections aren't interrupted mid-transfer.
+      Clash's default port is 7897, so append `--proxy http://127.0.0.1:7897` to the command to route the connection through the proxy:
+      <pre><code>
+pip install torch==2.4.1 torchvision==0.19.1 torchaudio==2.4.1 --index-url https://download.pytorch.org/whl/cu124 --proxy http://127.0.0.1:7897
+      </code></pre>
+    </p>
+
+    <h3>3. Installing Ultralytics (YOLO v8)</h3>
+    <p>
+      Managing your project structure carefully pays off later when using and migrating it.
+      Pick a location to store your Ultralytics system, for example <code>E:\</code>.
+    </p>
+
+    <h4>3.1 Project Structure and Installation</h4>
+    <p>
+      There are several ways to install Ultralytics. Building from source lets you flexibly modify config files down the line.
+    </p>
+
+    <p>
+      On the <a href="https://github.com/ultralytics/ultralytics">GitHub page</a> , download the .zip archive and extract it wherever you like.
+      This folder will become the project's root directory. Once extracted, enter the folder and build from source:
+
+      <pre><code>
+cd ultralytics-main
+pip install -e .  
+      </code></pre>
+    </p>
+
+    <p>
+      At this point the Ultralytics core is installed, but a few dependencies are still missing.
+      The requirements file for YOLO v8 lives in the very first release.
+      Open the initial v8.0.4 <a href="https://github.com/ultralytics/ultralytics/tree/v8.0.4">release page</a> and download
+      <code>requirements.txt</code> into <code>ultralytics-main</code>:
+
+      <pre><code>
+pip install -r requirements.txt
+      </code></pre>
+    </p>
+
+    <p>
+      Run the command above to install all dependencies listed in <code>requirements.txt</code>,
+      which completes the full Ultralytics installation.
+    </p>
+
+    <p>
+      The root directory must contain a <code>datasets</code> folder for storing datasets. Run:
+
+      <pre><code>
+mkdir datasets
+      </code></pre>
+    </p>
+
+    <h4>3.2 Downloading a Model</h4>
+    <p>
+      To use a YOLO v8 model, head to the Ultralytics docs, find <a href="https://docs.ultralytics.com/zh/models/yolov8/">YOLO v8</a>,
+      and download the <code>.pt</code> pretrained model file you need.
+    </p>
+
+    <p>
+      <b>Optional:</b> For easier model-file management, create a <code>.pt</code> folder under <code>ultralytics</code>
+      to store your pretrained model files.
+    </p>
+    <p>
+      At this point your project structure should look something like:
+      <pre><code>
+/ultralytics-main/
+├── datasets/
+├── ultralytics/
+│   ├── assets
+│   ├── cfg
+│   ├── engine
+│   ├── pt
+│   │	└── _model_name.pt
+│   └── ...
+└── ...
+      </code></pre>
+    </p>
+
+    <h2>Part B. Building a Dataset</h2>
+    <p>
+      Assuming you already have your images and annotation data, you need to export them into a format YOLO supports.
+      After exporting, you should have a <code>.txt</code> annotation file corresponding one-to-one with each image file.
+      Now you can start creating a dataset.
+    </p>
+
+    <p>
+      Under <code>ultralytics-main/datasets</code>, create a folder with a name of your choosing
+      to hold the data for a single training project. We'll use `data1` as an example:
+
+      <pre><code>
+cd E:\ultralytics-main\datasets
+mkdir data1
+cd data1
+      </code></pre>
+    </p>
+
+    <p>
+      Inside that folder, create two folders named <code>train</code> and <code>val</code>,
+      and within each create <code>images</code> and <code>labels</code> folders. 
+      <code>train</code> holds the training data and <code>val</code> holds the validation data,
+      with the data stored separately as images and label files.
+      <b>Be sure that when you split the training and validation sets, the image files and annotation files correspond one-to-one.</b>
+    </p>
+
+    <p>
+      At this point the project structure should look something like:
+      <pre><code>
+/ultralytics-main/
+├── datasets/
+│   └── data1
+│   	│── train
+│   	│	├── images
+│   	│	└── labels
+│   	└── val
+│   		├── images
+│   		└── labels
+├── ultralytics/
+│   └── ...
+└── ...
+      </code></pre>
+    </p>
+
+    <h2>Part C. Training the Data</h2>
+    <h3>1. Writing the Description File</h3>
+    <p>
+      The description file is a .yaml file placed in the dataset path (which should now be <code>/ultralytics-main/datasets/data1/</code>).
+      For different training objectives, look up the corresponding identifier in the official docs,
+      find the template stored in <code>/ultralytics-main/ultralytics/cfg/datasets/</code>, modify it,
+      and save it to your designated path (<b>never edit the template directly</b>—copy it to the target path first, then make your changes).
+    </p>
+
+    <p>
+      The categories in the description file must be filled in strictly in order.
+      This information is also exported when you export the annotation files;
+      for example, ISAT stores the category file as <code>classes.txt</code> in the export folder.
+    </p>
+
+    <h3>2. Training Command / Script</h3>
+    <p>
+      YOLO training can be launched either via command or a Python script.
+      When running the command, make sure the terminal is working from the root directory;
+      the Python script should likewise be placed in the root directory.
+    </p>
+
+    <p>
+      For parameter settings, refer to the <a href="https://docs.ultralytics.com/zh/models/yolov8/#yolov8-usage-examples">official docs</a>.
+      Example command:
+      <pre><code>
+yolo task=segment mode=train model=./ultralytics/pt/yolov8n-seg.pt data=./datasets/data1/config.yaml workers=1 epochs=50 batch=16
+      </code></pre>
+
+      A script achieves the exact same result:
+      <pre><code>
+from ultralytics import YOLO
+
+# Load model
+model = YOLO('ultralytics/pt/yolov8n-seg.pt')
+# Train the model
+model.train(data='datasets/data1/config.yaml', workers=1, epochs=50, batch=16)
+      </code></pre>
+
+      And with that, you've completed the full YOLO v8 training workflow.
+    </p>
 
   </body>
 </html>
