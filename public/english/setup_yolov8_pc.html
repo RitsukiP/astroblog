@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Deploy YOLO v8 and train datasets on Windows PC</title>
+  </head>
+  <body>
+    <a href="en_index.html">Back to Index</a>
+    <h1>Deploy YOLO v8 and train datasets on Windows PC</h1>
+    <p>
+      This document records how to set up a YOLO v8 inference system and train
+      the datasets on a Windows PC
+    </p>
+
+    <h2>Part A. Environment set up and architecture design</h2>
+    <p>
+      Following dependecies are required for running YOLO v8: You are required
+      to follow a sequence to conduct installation.
+    </p>
+
+    <h3>1. Conda environment config</h3>
+    <p>
+      There are <a href="">Miniconda</a> and <a href="">Anaconda</a> two types
+      of software. The difference between them is that the former one will only
+      install the basic Python packages after initialisation, but the latter one
+      will give you all handy packages and GUI called <b>Navigator</b> after
+      initialisation. I'll use Miniconda for demonstration.
+    </p>
+
+    <h4>1.1 Installation</h4>
+    <p>
+      You can download from <a href="https://www.anaconda.com/download/success">official website</a> and
+    choose the right version (Windows x64) of installation wizard, just follow the steps it prompted.
+    Make sure you have adequate disk volume and install it at default location,
+    this action could prevent unnecessary troubles.
+    </p>
+
+    <h4>1.2 Create virtual environment and start using</h4>
+    <p>
+      After installation, you can find Anaconda Prompt and Anaconda Powershell Prompt,
+      it indicates that conda environment is successfully installed.
+      <br />Start one of them, it indicates that you are running conda if the `(base)` is shown.
+
+      <pre><code>
+        conda create -n yolov8 python=3.8
+      </code></pre>
+
+
+    </p>
+
+
+
+
+  </body>
+</html>
