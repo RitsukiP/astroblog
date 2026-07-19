@@ -16,8 +16,13 @@
     <h2>Part A. Environment set up and architecture design</h2>
     <p>
       Following dependecies are required for running YOLO v8: You are required
-      to follow a sequence to conduct installation.
+      to follow a sequence to conduct installation:
     </p>
+    <ul>
+      <li>Conda environment</li>
+      <li>PyTorch</li>
+      <li>Ultralytics (i.e. YOLO v8)</li>
+    </ul>
 
     <h3>1. Configuring the Conda Environment</h3>
     <p>
@@ -27,7 +32,7 @@
       is ready to go out of the box for basic data-processing work and comes with the visual Navigator tool for managing environments.
       This guide will use Miniconda for the installation walkthrough.
     </p>
-    
+
 
     <h4>1.1 Installation</h4>
     <p>
@@ -114,7 +119,7 @@ pip install torch==2.4.1 torchvision==0.19.1 torchaudio==2.4.1 --index-url https
 
       <pre><code>
 cd ultralytics-main
-pip install -e .  
+pip install -e .
       </code></pre>
     </p>
 
@@ -188,7 +193,7 @@ cd data1
 
     <p>
       Inside that folder, create two folders named <code>train</code> and <code>val</code>,
-      and within each create <code>images</code> and <code>labels</code> folders. 
+      and within each create <code>images</code> and <code>labels</code> folders.
       <code>train</code> holds the training data and <code>val</code> holds the validation data,
       with the data stored separately as images and label files.
       <b>Be sure that when you split the training and validation sets, the image files and annotation files correspond one-to-one.</b>
