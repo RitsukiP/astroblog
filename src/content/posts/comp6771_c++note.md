@@ -313,7 +313,7 @@ namespace chrono = std::chrono;
 1. An object is a piece of memory of a specific type that holds some data
 	对象本质是一片有特定类型并存有数据的内存
 - 所有 variables 都是对象
-- wtf
+- class / struct 等复杂的数据成员封装也是对象
 2. Object lifetime starts when it comes in scope
 	对象的生命周期从它进入作用域时开始。
 - 构建对象为伊始
@@ -322,7 +322,7 @@ namespace chrono = std::chrono;
 > 这是基本类型遵循的行为，但你可能凭直觉就知道这一点。对于类（class），我们往往会更明确地思考这个问题。
 
 #### 4.2 Construction 对象构建
-Construction 描述了物理上分配内存和逻辑上创造对象的过程，在 C++ 中，最常见的做法是使用构造函数（constructor）实现对象的构建。
+对象构建描述了物理上分配内存和逻辑上创造对象的过程；在 C++ 中，最常见的做法是使用构造函数（constructor）实现对象的构建。
 
 #### 4.3 C++ 的 OOP 概念
 1. class 类
@@ -339,7 +339,7 @@ Construction 描述了物理上分配内存和逻辑上创造对象的过程，�
 
 
 ### 5. Class 类
-class 是一种类型（type），和 `<int>, <double>` 等一样，不过它是自定义的
+class 是一种类型（type），和 `<int>, <double>` 等一样，不过它是你自定义的。
 #### 5.1 Private & Public
 Public: 可从外部访问的类组件，Private 反之。
 习俗：对于 private 变量在结尾处加上下划线 `_` 
@@ -783,6 +783,7 @@ sp2.reset();       // 对象 11 被销毁
 - 当所有 `shared_ptr` 都释放时，对象会被销毁
 
 `.lock()` 升级关系，返回一个 `shared_ptr` 并会增加 `use_count`，若原对象计数为零（即已被销毁），则返回 `nullptr`
+
 `.reset()` 自身置空，放弃观察权
 
 以上指针在取得内存空间时应使用 C++14 起开始的新式声明方式而非 `new`:
