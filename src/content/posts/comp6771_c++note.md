@@ -558,7 +558,8 @@ public:
 }
 ```
 
-#### 3. Container Requirements 容器要求
+### 3. Container Requirements 容器要求
+
 容器只需要允许 `std::[cr]begin / std::[cr]end` method 即可
 ```cpp
 class Container {
@@ -628,7 +629,36 @@ class Container {
 	const_reverse_iterator crend() const;
 }
 ```
+### 4. const 正确性
+
+在 C++ 中正确地对指针使用 const 是一件比较容易混淆的事情，横向对比四种指针（均指向位于 stack 的变量 `a`):
+
+```cpp
+auto a = 8;
+auto b = 10;
+
+// ptrs
+int* p1 = &a;
+const int* p2 = &a;
+int* const p3 = &a;
+const int* const p4 = &a
+  
+// available operations
+p2 = &b;		// point to another object
+*p3 = 5;		// change the object's value
+```
+
+规则：**前 const 指针可变，后 const 对象可变**
+
+1. 对于 `p1` 来说就是都可变，最灵活的指针
+2. `p2` 指针可变，也就是说 `p2` 可以指向其他的对象，但其指向的对象的值不可变
+3. `p3` 对象可变，也就是说 `p3` 不能指向其他对象，但可以通过/不通过指针改变对象的数值
+4. `p4` 都不可变
+
+
+
 ## Week 5
+
 ### 1. Exceptions 异常
 包含 exception 头文件：`#include <stdexcept>`
 
