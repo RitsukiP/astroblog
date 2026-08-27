@@ -419,10 +419,16 @@ C++11 以前定义赋值函数的方法参考 5.1 Private & Public 所示内容�
 #### 5.4 Destructor 析构函数
 当你打算毁灭一个对象（object）的时候，可能会需要析构函数，特别是当你从 heap 分配了内存时，不定义析构函数会导致内存泄漏（memory leakage），常用于：
 - 释放指针
+
 - 关闭文件
+
 - 解锁 mutexes
+
 - 放弃数据库操作
-一定要使用 `noexcept` 关键词，向编译器作出保证你的析构函数不会抛出 exception（你也应当信守承诺，不抛出 exception）
+
+  
+
+  一定要使用 `noexcept` 关键词，向编译器作出保证你的析构函数不会抛出 exception（你也应当信守承诺，不抛出 exception）
 
 它和构造函数一样声明在 class public field 的内部：
 ```cpp

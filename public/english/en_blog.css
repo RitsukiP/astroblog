@@ -1,0 +1,35 @@
+h1 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: xx-large;
+}
+
+h2 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: x-large;
+}
+
+h3 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: large;
+}
+
+h4 {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: bold;
+    font-size: medium;
+}
+
+p {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: normal;
+    font-size: medium;
+}
+
+body {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
